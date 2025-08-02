@@ -3,7 +3,7 @@ process
           console.error(reason, "Unhandled Rejection at Promise", p);
      })
      .on("uncaughtException", (err) => {
-          console.error(err, "Uncaught Exception thrown");
+          console.error(err, "\n Uncaught Exception thrown \n");
           console.log("LOL");
           process.exit(1);
      });
@@ -12,6 +12,7 @@ import "dotenv/config"
 import express from 'express'
 import * as http from 'node:http'
 import { Server as SocketIOServer } from 'socket.io'
+import { mongoDBConfig } from './config/MongoDB.config';
 
 
 const app = express()
@@ -27,5 +28,6 @@ ioSocket = new SocketIOServer(server, {
 const port = Number(process.env.PORT) || 9000
 
 server.listen(port, () => {
-     console.log("Server is running in link: http://localhost:9000")
+     mongoDBConfig()
+     console.log("🖥️  Server is running in link:", process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.GLOPAL_API_URL)
 })
