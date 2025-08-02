@@ -5,21 +5,23 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "dev": "nodemon",
+    "dev": "concurrently \"nodemon -L\" \"npx ts-node ./src/Queue/worker.ts\"",
     "build": "tsc",
-    "start": "node dist/app.js",
+    "start": "concurrently \"node ./dist/server.js\" \"node ./dist/Queue/worker.js\"",
     "test": "jest",
     "taze:local": "npx taze -r",
     "taze:back": "npx taze major",
     "taze:update": "npx taze major -w",
     "taze:patch": "npx taze patch",
-    "compress:ubuntu": "sudo zip -r project.zip ."
+    "compress:ubuntu": "sudo zip -r project.zip .",
+    "run:worker": "npx ts-node ./src/Queue/worker.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.11.0",
+    "concurrently": "^9.2.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
@@ -36,6 +38,7 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.4",
+    "@types/bull-arena": "^3.0.10",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
     "@types/crypto-js": "^4.2.2",
@@ -50,6 +53,7 @@
     "@types/node-cron": "^3.0.11",
     "@types/request-ip": "^0.0.41",
     "bull-arena": "^4.5.1",
+    "bullmq": "^5.56.9",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "nodemon": "^3.1.10",
