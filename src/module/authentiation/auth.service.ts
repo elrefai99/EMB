@@ -152,7 +152,6 @@ export class authService {
                const refresh = refreshToken(cUser.id);
                return { token, refresh }
           }
-
           const outputString = googleUser.name.replace(/\s/g, "-");
           const finalName = outputString + Math.floor(Math.random() * 10000001);
 
