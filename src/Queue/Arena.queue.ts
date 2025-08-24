@@ -9,7 +9,7 @@ export const arenaConfig: any = Arena(
                     name: "emailQ",
                     hostId: "server",
                     redis: {
-                         url: process.env.REDIS_URL,
+                         url: process.env.REDIS_HOST,
                     },
                },
           ],

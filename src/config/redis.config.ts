@@ -1,9 +1,9 @@
 import { createClient } from 'redis';
 
-const redis: any = createClient({ url: String(process.env.REDIS_URL) });
+const redis: any = createClient({ url: String(process.env.REDIS_HOST) });
 
 redis.on("error", (err: any) => console.log("Redis Client Error", err));
-redis.connect().then(() => console.log(`🛢️  Redis connected successfully: ${process.env.REDIS_URL}`));
+redis.connect().then(() => console.log(`🛢️  Redis connected successfully: ${process.env.REDIS_HOST}`));
 
 process.on('SIGINT', async () => {
      await redis.disconnect();

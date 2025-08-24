@@ -29,5 +29,5 @@ const port = Number(process.env.PORT) || 9000
 
 server.listen(port, () => {
      mongoDBConfig()
-     console.log("🖥️  Server is running in link:", process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.GLOPAL_API_URL)
+     console.log("🖥️  Server is running in link:", process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.LIVE_API_URL)
 })

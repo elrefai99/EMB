@@ -14,7 +14,7 @@ export const mongoDBConfig = () => {
      const uriLive = process.env.MONGO_URI as string
 
      connect(uriLive).then(() => {
-          console.log(`✅ Success connected to Lesoll Chat ${process.env.NODE_ENV === "development" ? "Test" : "Live"} Database`)
+          console.log(`✅ Success connected to EMB Chat ${process.env.NODE_ENV === "development" ? "Test" : "Live"} Database`)
           console.log('ɪᴘ My IP Address:', getLocalIP());
      }).catch((err) => {
           console.error("MongoDB connection error:", err)

@@ -4,7 +4,7 @@ import { jobProcessor } from "./job.proccess";
 dotenv.config();
 const worker = new Worker("emailQ", jobProcessor, {
      connection: {
-          url: process.env.REDIS_URL,
+          url: process.env.REDIS_HOST,
      },
 });
 
