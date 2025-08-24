@@ -4,6 +4,8 @@ import { UserModel } from "../../schema/user/user.schema";
 import { EnumUser } from "../../Common/shared/enum/user.enum";
 import ServerError from "../../utils/server.error.utils";
 import { pendingToken } from "../../utils/JWT/pending.token.jwt";
+import { accessToken } from "../../utils/JWT/access.toke.jwt";
+import { refreshToken } from "../../utils/JWT/refrsh.token.jwt";
 
 export class authService {
 
@@ -15,6 +17,7 @@ export class authService {
         }
         payload.password = await this.hashPassword(payload.password)
         payload.phone = this.normalizePhone(payload.phone)
+        payload.email = payload.email.toLowerCase()
         const username = `${payload.fName.toLowerCase()}_${payload.lName.toLowerCase()}${Math.floor(Math.random() * 1000)}`
 
         const user = await UserModel.create({
@@ -26,8 +29,21 @@ export class authService {
         return{success: true, token}
     }
 
-    public async loginService () {
+    public async loginService (payload: IPayload) {
+        const cUser = await UserModel.findOne({status: EnumUser.live, email:payload.email.toLowerCase() }, {password: 1, tokenVersion: 1})
 
+        if(!cUser){
+            throw new ServerError("This Email is not exist, try agin please", 400)
+        }
+
+        const cPassword = await bcrypt.compare(payload.password, cUser.password)
+        if(!cPassword){
+            throw new ServerError("This password not same", 400)
+        }
+
+        const token = accessToken(String(cUser._id))
+        const refresh_Token = refreshToken(String(cUser._id))
+        return{success: true, token, refresh_Token}
     }
 
     private async hashPassword (payload: string) {
