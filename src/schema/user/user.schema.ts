@@ -37,10 +37,6 @@ const userSchema = new Schema<IUser>({
           default: '',
           index: true,
      },
-     tokenVersion: {
-        type: Number,
-        default: 0
-     }
 }, {
     timestamps: true
 })
