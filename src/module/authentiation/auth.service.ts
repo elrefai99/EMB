@@ -128,7 +128,7 @@ export class authService {
          return this.getFacebookAuthURL()
     }
 
-        public async facebookCallBackService(payload: any) {
+     public async facebookCallBackService(payload: any) {
           const code = payload.code;
 
           const { id_token, access_token } = await this.googleToken(
