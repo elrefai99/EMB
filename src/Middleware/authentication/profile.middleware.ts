@@ -14,7 +14,7 @@ export const pendingMiddleware = asyncHandler(
         const cookie = req.cookies;
 
          // Use the first available token
-         const token = tokenFromAuthHeader || tokenFromHeader || tokenFromQuery || cookie.pending_token;
+         const token = tokenFromAuthHeader || tokenFromHeader || tokenFromQuery || cookie.access_token;
 
          if (token) {
           const TOKEN_SECRET_KEY = process.env.PENDING_TOKEN_SECRET as string;
@@ -23,11 +23,8 @@ export const pendingMiddleware = asyncHandler(
                     res.status(403).json({ code: 403, status: "Forbidden", message: "there was an error creating with Token", });
                     return;
                }
-               const user: any = await UserModel.findOne({ _id: decoded._id, status: EnumUser.pending }, {
-                    _id: 1,
-                    username: 1,
-                    phone: 1,
-                    verifiedPhone: 1,
+               const user: any = await UserModel.findOne({ _id: decoded._id, status: EnumUser.live }, {
+                    password: 0,
                });
                if (user) {
                     req.user = user;
